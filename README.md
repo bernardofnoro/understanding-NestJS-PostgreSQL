@@ -237,7 +237,7 @@ Dentro de `src -> cantoras` vamos criar o arquivo `cantora.controller.ts`
 
 Em Nest, para especificar que vamos criar um _controller_ precisamos de um _**Decorator**_ (O que é isso? O que come?).
 
-Um _decorator_ identifica o que é a coisa que estamos criando e nos ajuda a fazer isso através de seus acessórios.
+:bangbang: Um _decorator_ **identifica o que é** a coisa que estamos criando e nos ajuda a fazer isso através de seus acessórios. :bangbang:
 
 > Grande parte dos _decorators_ em Nest ficam dentro de @nestjs/commom
 
@@ -255,14 +255,14 @@ Agora vamos criar uma classe chamada '**CantorasController**' e decorá-la com o
 import { Controller } from '@nestjs/common';
 
 @Controller() //Decorator para a Classe
-//Criando a classe CantorasController
-class CantorasController {
+
+class CantorasController { //Criando a classe CantorasController
   
 }
 
 ```
 
-:bangbang: O que estamos fazendo aqui é criando a classe **CantorasController** e dizendo ao Nest quee esta classe é um _controller_.
+:bangbang: O que estamos fazendo aqui é criando a classe **CantorasController** e dizendo ao Nest que esta classe é um _controller_.
 
 Para uma classe virar um _controller_ precisamos adicionar o _decorator_ '**@Controller()**' em cima dela. :bangbang:
 
@@ -343,7 +343,7 @@ Agora é a hora que a gente testa, certo?!
 
 WAIT, NOT AINDA... a gente não disse pra nossa aplicação que **cantora.controller** existe! Pra quem a gente diz isso? Pro cara que controla toda a lógica: `app.modules.ts`. 
 
-Nós estamos dizendo que a **chave** controllers recebe um **array** de todos os controllers que queremos:
+Nós estamos dizendo que a **chave** _controllers_ recebe um **array** de todos os controllers que queremos:
 
 ```
 import { Module } from '@nestjs/common';
@@ -394,7 +394,7 @@ No terminal, execute o comando abaixo para iniciar a aplicação:
 npm run start:dev
 ```
 
-Se checarmos nosso package.json vemos que este comando é executado desta forma:
+Se checarmos nosso **package.json** vemos que este comando é executado desta forma:
 
 ```nest start --watch
 nest start --watch
@@ -428,4 +428,4 @@ Se tudo está certo, a resposta '**Todas as cantoras**' deverá aparecer!
 
 ## `GET` /cantoras/:cantoraID
 
-Neste momento, como não estamos fazendo uso de um Banco de Dados 
+Neste momento, como não estamos fazendo uso de um Banco de Dados ou usando um arquivo .json para armazenar os dados, receberemos um ID aleatórios
