@@ -296,7 +296,7 @@ class CantorasController {
 
 Assim, cada verbo HTTP (GET, PUT, POST e DELETE) dentro do _controller_ vai começar com `/cantoras`.
 
-### `GET` /cantoras 
+## `GET` /cantoras 
 
 Vamos dizer ao Nest que estamos criando esta rota e que ela receberá um verbo **GET** via HTTP e vai **retornar** alguma coisa na tela.
 
@@ -524,3 +524,49 @@ Agora, vamos testar:
 ![image_10](images/image_10.png)
 
 Se tudo está certo, a resposta '**Cantora Criada**' deverá aparecer!
+
+## `DELETE` /cantoras/:cantoraId
+
+Para esta rota devemos criar um método chamado `removendoCantora()` que nos retornará uma mensagem na tela. 
+
+Como **DELETE** se trata de um método diferente dos anteriores, precisamos importá-lo e adicionar-mos como _decorator_ de `removendoCantora()`.
+
+```
+import { Controller, Get, Post, Delete } from '@nestjs/common'; // Importando método DELETE
+
+@Controller('cantoras')
+export class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+
+  @Get('/:cantoraId')
+  getCantoraById() {
+    return 'Mostrando Cantora pelo ID';
+  }
+
+  @Post()
+  criandoCantora() {
+    return 'Cantora Criada';
+  }
+
+  @Delete('/:cantoraId') // Dizendo que DELETE é um DECORATOR e vai para /cantoras/:cantoraID
+  removendoCantora() { // Criando Classe 'removendoCantora()'
+    return 'Cantora Removida'; // Mensagem que será exibida na tela
+  }
+}
+
+```
+
+Ao salvar seu arquivo, a saída no terminal deve ter esta linha adicional:
+
+- `LOG [RouterExplorer] Mapped {/cantoras/:cantoraId, DELETE} route` - Rota `DELETE /cantoras/:cantoraId` mapeada
+
+Agora, vamos testar:
+
+:bangbang: Certifique-se de que o **DELETE** é o verbo que está sendo utilizado.
+
+![image_11](images/image_11.png)
+
+Se tudo está certo, a resposta '**Cantora Removida**' deverá aparecer!

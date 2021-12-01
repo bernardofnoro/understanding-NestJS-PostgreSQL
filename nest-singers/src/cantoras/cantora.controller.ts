@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Delete } from '@nestjs/common';
 
 @Controller('cantoras')
 export class CantorasController {
@@ -15,5 +15,10 @@ export class CantorasController {
   @Post()
   criandoCantora() {
     return 'Cantora Criada';
+  }
+
+  @Delete('/:cantoraId')
+  removendoCantora() {
+    return 'Cantora Removida';
   }
 }
