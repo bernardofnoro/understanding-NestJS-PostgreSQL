@@ -262,7 +262,9 @@ class CantorasController {
 
 ```
 
-:bangbang: O que estamos fazendo aqui é criando a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller quando adicionamoso o _decorator_ '**@Controller()**' em cima dela. :bangbang:
+:bangbang: O que estamos fazendo aqui é criando a classe **CantorasController** e dizendo ao Nest quee esta classe é um _controller_.
+
+Para uma classe virar um _controller_ precisamos adicionar o _decorator_ '**@Controller()**' em cima dela. :bangbang:
 
 > Todas as rotas devem ser definidas **dentro** da classe-controller
 
