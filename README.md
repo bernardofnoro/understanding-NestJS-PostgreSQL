@@ -139,6 +139,8 @@ No menu do VS Code podemos ver que diversos arquivos e uma estrutura de pastas f
   - Arquivo de configuração do ESLINT, uma ferramenta que identifica e reporta padrões no código, nos retornando erros ou não, e;
   - Evita bugs e torna o código mais consistente.
 
+:bangbang: Neste momento, não vamos nos preocupar com a estrutura de pastas. Você perceberá que a estrutura proposta aqui acompanha os padrões atuais do mercado e não invalida o que aprendemos em sala, pelo contrário, complementa! :bangbang:
+
 Na pasta **src**, faça a remoção destes três arquivos:
 
 - app.controller.spec.ts
@@ -418,7 +420,7 @@ O barato na saída deste terminal é a quantidade de informações que temos:
 
 **Passo 01** - Altere a URL para o endereço que configuramos: `localhost:3000/cantoras`
 
-**Passo 02** - Certifique-se de que o GET é o verbo que está sendo utilizado.
+**Passo 02** - :bangbang: Certifique-se de que o **GET** é o verbo que está sendo utilizado.
 
 **Passo 03** - Aperte Send
 
@@ -484,3 +486,41 @@ Se tudo está certo, a resposta '**Mostrando Cantora pelo ID**' deverá aparecer
 
 ## `POST` /cantoras
 
+Para esta rota devemos criar um método chamado `criandoCantora()` que nos retornará uma mensagem na tela. 
+
+Como **POST** se trata de um método diferente dos anteriores, precisamos importá-lo e adicionar-mos como _decorator_ de `criandoCantora()`.
+
+```
+import { Controller, Get, Post } from '@nestjs/common'; // Importando método POST
+
+@Controller('cantoras')
+export class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+
+  @Get('/:cantoraId')
+  getCantoraById() {
+    return 'Mostrando Cantora pelo ID';
+  }
+
+  @Post() // Dizendo que POST é um DECORATOR
+  criandoCantora() { // Criando Classe 'criandoCantora()'
+    return 'Cantora Criada'; // Mensagem que será exibida na tela
+  }
+}
+
+```
+
+Ao salvar seu arquivo, a saída no terminal deve ter esta linha adicional:
+
+- `LOG [RouterExplorer] Mapped {/cantoras, POST}` - Rota`POST /cantoras` mapeada
+
+Agora, vamos testar:
+
+:bangbang: Certifique-se de que o **POST** é o verbo que está sendo utilizado.
+
+![image_10](images/image_10.png)
+
+Se tudo está certo, a resposta '**Cantora Criada**' deverá aparecer!

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 
 @Controller('cantoras')
 export class CantorasController {
@@ -7,8 +7,13 @@ export class CantorasController {
     return 'Todas as cantoras';
   }
 
-  @Get('/:cantoraId') // Especificando que esta rota recebe um ID na requisição
+  @Get('/:cantoraId')
   getCantoraById() {
     return 'Mostrando Cantora pelo ID';
+  }
+
+  @Post()
+  criandoCantora() {
+    return 'Cantora Criada';
   }
 }
