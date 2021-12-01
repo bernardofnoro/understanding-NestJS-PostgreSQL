@@ -262,7 +262,7 @@ class CantorasController {
 
 ```
 
-:bangbang: O que estamos fazendo aqui é criando a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller quando adicionamoso a função '**@Controller()**' em cima dela. :bangbang:
+:bangbang: O que estamos fazendo aqui é criando a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller quando adicionamoso o _decorator_ '**@Controller()**' em cima dela. :bangbang:
 
 > Todas as rotas devem ser definidas **dentro** da classe-controller
 
@@ -335,7 +335,7 @@ export class CantorasController {
 
 ```
 
-Note que @Get() também assume a função de _decorator_, ou seja, uma requisição **GET** em **/cantoras** é direcionada para **getCantoras()**. (Certeza que sua cabeça explodiu agora, né?!)
+Note que **@Get()** também assume a função de _decorator_, ou seja, uma requisição **GET** em **/cantoras** é direcionada para **getCantoras()**. (Certeza que sua cabeça explodiu agora, né?!)
 
 Agora é a hora que a gente testa, certo?!
 
