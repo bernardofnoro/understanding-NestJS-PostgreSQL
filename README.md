@@ -162,6 +162,7 @@ import { Module } from '@nestjs/common';
   imports: [],
 })
 export class AppModule {}
+
 ```
 
 Por hora, não vamos nos preocupar com a funcionalidade do código e sim, ter em mente que este arquivo, **app.modules.ts** é o principal arquivo contendo toda a lógica de funcionamento da nossa API.
@@ -177,6 +178,7 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+
 ```
 
 - `async function bootstrap()` - nesta função está acontecendo a inicialização da nossa API
@@ -256,6 +258,7 @@ import { Controller } from '@nestjs/common';
 class CantorasController {
   
 }
+
 ```
 
 O que estamos fazendo aqui é criar a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller adicionando a função '**@Controller()**' acima.
@@ -283,6 +286,7 @@ import { Controller } from '@nestjs/common';
 class CantorasController {
   
 }
+
 ```
 
 Cada médoto dentro do _controller_ vai começar com `/cantoras`.
@@ -302,6 +306,7 @@ class CantorasController {
     return 'Todas as cantoras';
   }
 }
+
 ```
 
 `getCantoras` é um método que estamos chamando quando a requisição chega. Pera, mas como o método sabe que a requisição é o GET?
@@ -328,6 +333,7 @@ export class CantorasController {
     return 'Todas as cantoras';
   }
 }
+
 ```
 
 Note que @Get() também assume a função de _decorator_, ou seja, uma requisição **GET** em **/cantoras** é direcionada para **getCantoras()**. (Certeza que sua cabeça explodiu agora, né?!)
@@ -347,6 +353,7 @@ import { Module } from '@nestjs/common';
   controllers: [],
 })
 export class AppModule {}
+
 ```
 
 Contudo, a gente precisa antes exportar a nossa classe em **cantora.controller.ts** para que a rota funcione:
@@ -379,4 +386,44 @@ import { CantorasController } from '../cantoras/cantora.controller'; // Importan
 export class AppModule {}
 
 ```
+
+No terminal, execute o comando abaixo para iniciar a aplicação:
+
+```
+npm start:dev
+```
+
+Se checarmos nosso package.json vemos que este comando é executado desta forma:
+
+```nest start --watch
+nest start --watch
+```
+
+O que em realidade nos diz que se realizamos alguma alteração nos arquivos a aplicação é imediatamente reiniciada. 
+
+Se tudo deu certo seu terminal deve estar mostrando a aplicação rodando na porta 3000 e pode ser testada no Thunder ou Postman ou Insomnia.
+
+![image_07](images/image_07.png)
+
+O barato na saída deste terminal é a quantidade de informações que temos:
+
+- LOG [NestFactory] Starting Nest application... - Aqui o Nest está subindo
+- LOG [InstanceLoader] AppModule dependencies initialized - Iniciadas todas as dependências necessárias à API
+- LOG [RoutesResolver] CantorasController {/cantoras} - Controller para Cantoras funcionando
+- LOG [RouterExplorer] Mapped {/cantoras, GET} - Rota `GET /cantoras` mapeada
+- LOG [NestApplication] Nest application successfully started - Aplicação Iniciada com sucesso
+
+### No Thunder
+
+**Passo 01** - Altere a URL para o endereço que configuramos: `localhost:3000/cantoras`
+
+**Passo 02** - Certifique-se de que o GET é o verbo que está sendo utilizado.
+
+**Passo 03** - Aperte Send
+
+Se tudo está certo, a resposta '**Todas as cantoras**' deverá aparecer!
+
+![image_08](images/image_08.png)
+
+## `GET` /cantoras/:cantoraID
 
