@@ -1,4 +1,4 @@
-# API REST com NestJS e Prisma
+# API REST com NestJS, Prisma e PostgreSQL
 
 **NestJS** é um framework que nos ajuda a escalar de forma eficiente as aplicações construídas em cima do **Node.js**. Possui suporte para **JavaScript** e também **TypeScript**. 
 
@@ -159,7 +159,7 @@ Estes erros se tratam justamente dos arquivos que excluímos e para resolver est
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: []
+  imports: [],
 })
 export class AppModule {}
 ```
@@ -190,9 +190,183 @@ Altere também o caminho no arquivo **app.e2e-spec.ts** na pasta **test** para o
 import { AppModule } from './../src/app/app.module';
 ```
 
+### ESLINT Reclamando de Parsing Error :boom:
+
+Caso as bolinhas vermelhas no VS Code persistam e ao checar a aba problemas você encontrar a seguinte mensagem abaixo escrita:
+
+```
+Parsing error: File '.......tsconfig.json' not found.eslint
+```
+
+Vá até o arquivo **.eslintrc.js** e faça uma alteração no nome do projeto. Mude de:
+
+```
+project: 'tsconfig.json',
+```
+
+para:
+
+```
+project: 'nome-do-projeto/tsconfig.json',
+```
+
+No nosso exemplo:
+
+```
+project: 'nest-singers/tsconfig.json',
+```
+
 ## Criando as Rotas
 
+Em Nest as rotas são criadas através dos **_Controllers_**. Mas o que são eles? O que comem?
 
+- Os _controllers_ são responsáveis por **receber** as requisições **HTTP** e **devolver** uma resposta para o cliente.
+- Um único _controller_ podem lidar com `n` rotas configuradas dentro deles.
+- Uma aplicação pode ter múltiplos _controllers_ e é recomendável que o tenha para organizar o grupo de rotas que uma determinada funcionalidade da aplicação terá.
 
+A lógica de funcionamento e caminhos da aplicação não fica dentro destes arquivos, mas eles são os responsáveis por chamá-la em outro.
 
+Vamos criar nosso _controller_ para 'cantoras'.
+
+Na pasta **src** vamos criar a pasta '**cantoras**' e tudo que está relacionado à cantoras ficará dentro deste diretório.
+
+Dentro de `src -> cantoras` vamos criar o arquivo `cantora.controller.ts`
+
+Em Nest, para especificar que vamos criar um _controller_ precisamos de um _**Decorator**_ (O que é isso? O que come?).
+
+Um _decorator_ identifica o que é a coisa que estamos criando e nos ajuda a fazer isso através de seus acessórios.
+
+> Grande parte dos _decorators_ em Nest ficam dentro de @nestjs/commom
+
+Vamos importar o **Decorator** chamado **Controller** para o nosso arquivo:
+
+```
+import { Controller } from '@nestjs/common';
+```
+
+O que estamos dizendo aqui é que estamos importando uma classe chamada '**Controller**' que contém uma série de métodos dentro dela e estes métodos serão chamados ao configurarmos as rotas.
+
+Agora vamos criar uma classe e decorá-la com o Decorator:
+
+```
+import { Controller } from '@nestjs/common';
+
+@Controller()
+class CantorasController {
+  
+}
+```
+
+O que estamos fazendo aqui é criar a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller adicionando a função '**@Controller()**' acima.
+
+> Todas as rotas devem ser definidas **dentro** da classe-controller
+
+Olha só que interessante... se observarmos com atenção notaremos um padrão em nossas rotas:
+
+`GET` /cantoras 
+
+`GET` /cantoras/:cantoraId
+
+`POST` /cantoras
+
+`PUT` /cantoras/:cantoraId
+
+`DELETE` /cantoras/:cantoraId
+
+**Elas possuem /cantoras** e nós podemos dizer ao _decorator_ que todas **começam** com 'cantoras' dentro da função `Controller()`.
+
+```
+import { Controller } from '@nestjs/common';
+
+@Controller('cantoras')
+class CantorasController {
+  
+}
+```
+
+Cada médoto dentro do _controller_ vai começar com `/cantoras`.
+
+### `GET` /cantoras 
+
+Vamos dizer ao Nest que estamos criando esta rota que receberá um **GET** via HTTP e vai **retornar** alguma coisa.
+
+```
+import { Controller } from '@nestjs/common';
+
+@Controller('cantoras')
+class CantorasController {
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+}
+```
+
+`getCantoras` é um método que estamos chamando quando a requisição chega. Pera, mas como o método sabe que a requisição é o GET?
+
+Nós o importamos como um _decorator_:
+
+```
+import { Controller, Get } from '@nestjs/common';
+```
+
+E dizemos ao Nest que **getCantoras()** é um método **GET** adicionando-o acima, como fizemos com a Classe:
+
+```
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('cantoras')
+class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+}
+```
+
+Note que @Get() também assume a função de _decorator_, ou seja, uma requisição **GET** em **/cantoras** é direcionada para **getCantoras()**. (Certeza que sua cabeça explodiu agora, né?!)
+
+Agora é a hora que a gente testa, certo?!
+
+WAIT, NOT AINDA... a gente não disse pra nossa aplicação que **cantora.controller** existe! Pra quem a gente diz isso? Pro cara que controla toda a lógica: `app.modules.ts`. 
+
+Nós estamos dizendo que a **chave** controllers recebe um **array** de todos os controller que queremos:
+
+```
+import { Module } from '@nestjs/common';
+
+@Module({
+  imports: [],
+  controllers: [],
+})
+export class AppModule {}
+```
+
+Contudo, a gente precisa antes exportar a nossa classe em **cantora.controller.ts** para que a rota funcione:
+
+```
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('cantoras')
+export class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+}
+
+```
+
+Agora podemos fazer a importação no arquivo **app.modules.ts**:
+
+```
+import { Module } from '@nestjs/common';
+import { CantorasController } from '../cantoras/cantora.controller';
+
+@Module({
+  imports: [],
+  controllers: [CantorasController],
+})
+export class AppModule {}
+
+```
 
