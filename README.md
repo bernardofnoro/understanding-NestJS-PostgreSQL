@@ -241,17 +241,18 @@ Um _decorator_ identifica o que é a coisa que estamos criando e nos ajuda a faz
 Vamos importar o **Decorator** chamado **Controller** para o nosso arquivo:
 
 ```
-import { Controller } from '@nestjs/common';
+import { Controller } from '@nestjs/common'; //Importanto o Decorator Controller
 ```
 
 O que estamos dizendo aqui é que estamos importando uma classe chamada '**Controller**' que contém uma série de métodos dentro dela e estes métodos serão chamados ao configurarmos as rotas.
 
-Agora vamos criar uma classe e decorá-la com o Decorator:
+Agora vamos criar uma classe chamada '**CantorasController**' e decorá-la com o Decorator:
 
 ```
 import { Controller } from '@nestjs/common';
 
-@Controller()
+@Controller() //Decorator para a Classe
+//Criando a classe CantorasController
 class CantorasController {
   
 }
@@ -278,7 +279,7 @@ Olha só que interessante... se observarmos com atenção notaremos um padrão e
 ```
 import { Controller } from '@nestjs/common';
 
-@Controller('cantoras')
+@Controller('cantoras') //Dizendo ao Decorator que todas as rotas começam com /cantoras
 class CantorasController {
   
 }
@@ -288,14 +289,16 @@ Cada médoto dentro do _controller_ vai começar com `/cantoras`.
 
 ### `GET` /cantoras 
 
-Vamos dizer ao Nest que estamos criando esta rota que receberá um **GET** via HTTP e vai **retornar** alguma coisa.
+Vamos dizer ao Nest que estamos criando esta rota e que ela receberá um verbo **GET** via HTTP e vai **retornar** alguma coisa.
 
 ```
 import { Controller } from '@nestjs/common';
 
 @Controller('cantoras')
 class CantorasController {
+  //Recebendo verbo GET
   getCantoras() {
+  	// Retornando mensagem na tela
     return 'Todas as cantoras';
   }
 }
@@ -312,12 +315,16 @@ import { Controller, Get } from '@nestjs/common';
 E dizemos ao Nest que **getCantoras()** é um método **GET** adicionando-o acima, como fizemos com a Classe:
 
 ```
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common'; //Importanto o Decorator Controller e o Método GET
 
-@Controller('cantoras')
-class CantorasController {
+@Controller('cantoras') //Dizendo ao Decorator que todas as rotas começam com /cantoras
+//Criando a classe CantorasController
+export class CantorasController {
+  // Método GET adicionado
   @Get()
+  //Recebendo verbo GET
   getCantoras() {
+    // Retornando mensagem na tela
     return 'Todas as cantoras';
   }
 }
@@ -329,13 +336,14 @@ Agora é a hora que a gente testa, certo?!
 
 WAIT, NOT AINDA... a gente não disse pra nossa aplicação que **cantora.controller** existe! Pra quem a gente diz isso? Pro cara que controla toda a lógica: `app.modules.ts`. 
 
-Nós estamos dizendo que a **chave** controllers recebe um **array** de todos os controller que queremos:
+Nós estamos dizendo que a **chave** controllers recebe um **array** de todos os controllers que queremos:
 
 ```
 import { Module } from '@nestjs/common';
 
 @Module({
   imports: [],
+  // Criando Key e Array
   controllers: [],
 })
 export class AppModule {}
@@ -347,6 +355,7 @@ Contudo, a gente precisa antes exportar a nossa classe em **cantora.controller.t
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('cantoras')
+//Criando e exportando a classe CantorasController
 export class CantorasController {
   @Get()
   getCantoras() {
@@ -360,10 +369,11 @@ Agora podemos fazer a importação no arquivo **app.modules.ts**:
 
 ```
 import { Module } from '@nestjs/common';
-import { CantorasController } from '../cantoras/cantora.controller';
+import { CantorasController } from '../cantoras/cantora.controller'; // Importando arquivo de configuração
 
 @Module({
   imports: [],
+  // Criando Key e Array com a Classe CantorasController
   controllers: [CantorasController],
 })
 export class AppModule {}
