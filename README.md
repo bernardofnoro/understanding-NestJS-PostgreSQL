@@ -326,7 +326,7 @@ import { Controller, Get } from '@nestjs/common'; //Importanto o Decorator Contr
 @Controller('cantoras') //Dizendo ao Decorator que todas as rotas começam com /cantoras
 //Criando a classe CantorasController
 export class CantorasController {
-  // Método GET adicionado
+  // Método GET adicionado como DECORATOR de getCantoras
   @Get()
   //Recebendo verbo GET
   getCantoras() {
@@ -429,3 +429,58 @@ Se tudo está certo, a resposta '**Todas as cantoras**' deverá aparecer!
 ## `GET` /cantoras/:cantoraID
 
 Neste momento, como não estamos fazendo uso de um Banco de Dados ou usando um arquivo .json para armazenar os dados, receberemos um ID aleatórios
+
+Vamos no código criar o método que responderá quando a requisição GET em /cantoras/:cantoraID cheagar:
+
+```
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('cantoras')
+export class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+
+  @Get() // Método GET adicionado como DECORATOR de getCantoraByID
+  getCantoraById() {
+    return 'Mostrando Cantora pelo ID'; // Mensagem de retorno na tela
+  }
+}
+
+```
+
+Até aqui as duas rotas são exatamente as mesmas, com as mesmas funções e retorno. Precisamos dizer que a segunda vai receber um ID na URL:
+
+```
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('cantoras')
+export class CantorasController {
+  @Get()
+  getCantoras() {
+    return 'Todas as cantoras';
+  }
+
+  @Get('/:cantoraId') // Especificando que esta rota recebe um ID na requisição
+  getCantoraById() {
+    return 'Mostrando Cantora pelo ID';
+  }
+}
+
+```
+
+Lembre-se que especificamos o caminho `/cantoras` dentro do _decorator_ **@Controller()**, não sendo necessário repeti-lo ao longo do código.
+
+Ao salvar seu arquivo, a saída no terminal deve ter esta linha adicional:
+
+- `LOG [RouterExplorer] Mapped {/cantoras/:cantoraId, GET}` - Rota `/cantoras/:cantoraId` mapeada
+
+Agora, vamos testar:
+
+![image_09](images/image_09.png)
+
+Se tudo está certo, a resposta '**Mostrando Cantora pelo ID**' deverá aparecer!
+
+## `POST` /cantoras
+

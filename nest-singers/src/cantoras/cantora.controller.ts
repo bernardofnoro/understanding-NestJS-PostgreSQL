@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common'; //Importanto o Decorator Controller e o Método GET
+import { Controller, Get } from '@nestjs/common';
 
-@Controller('cantoras') //Dizendo ao Decorator que todas as rotas começam com /cantoras
-//Criando e exportando a classe CantorasController
+@Controller('cantoras')
 export class CantorasController {
-  // Método GET adicionado
   @Get()
-  //Recebendo verbo GET
   getCantoras() {
-    // Retornando mensagem na tela
     return 'Todas as cantoras';
+  }
+
+  @Get('/:cantoraId') // Especificando que esta rota recebe um ID na requisição
+  getCantoraById() {
+    return 'Mostrando Cantora pelo ID';
   }
 }
