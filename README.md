@@ -171,6 +171,7 @@ No arquivo **main.ts** precisamos dizer que movemos o arquivo **app.module.ts** 
 
 ```
 import { NestFactory } from '@nestjs/core';
+// Aqui dizemos que o arquivo foi movido
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
@@ -223,8 +224,8 @@ project: 'nest-singers/tsconfig.json',
 Em Nest as rotas são criadas através dos **_Controllers_**. Mas o que são eles? O que comem?
 
 - Os _controllers_ são responsáveis por **receber** as requisições **HTTP** e **devolver** uma resposta para o cliente.
-- Um único _controller_ podem lidar com `n` rotas configuradas dentro deles.
-- Uma aplicação pode ter múltiplos _controllers_ e é recomendável que o tenha para organizar o grupo de rotas que uma determinada funcionalidade da aplicação terá.
+- Um único _controller_ podem lidar com `n` rotas configuradas dentro dele.
+- Uma aplicação pode ter múltiplos _controllers_ e é recomendável que o tenha para organizar o grupo de rotas que uma determinada funcionalidade desta aplicação em questão terá.
 
 A lógica de funcionamento e caminhos da aplicação não fica dentro destes arquivos, mas eles são os responsáveis por chamá-la em outro.
 
@@ -261,7 +262,7 @@ class CantorasController {
 
 ```
 
-O que estamos fazendo aqui é criar a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller adicionando a função '**@Controller()**' acima.
+:bangbang: O que estamos fazendo aqui é criando a classe **Cantoras** e dizendo ao Nest que '**CantorasController**' é uma classe-controller quando adicionamoso a função '**@Controller()**' em cima dela. :bangbang:
 
 > Todas as rotas devem ser definidas **dentro** da classe-controller
 
@@ -277,7 +278,7 @@ Olha só que interessante... se observarmos com atenção notaremos um padrão e
 
 `DELETE` /cantoras/:cantoraId
 
-**Elas possuem /cantoras** e nós podemos dizer ao _decorator_ que todas **começam** com 'cantoras' dentro da função `Controller()`.
+**Elas possuem /cantoras** e nós podemos dizer ao _decorator_ que todas **começam** com `/cantoras` dentro da função `Controller()`.
 
 ```
 import { Controller } from '@nestjs/common';
@@ -289,11 +290,11 @@ class CantorasController {
 
 ```
 
-Cada médoto dentro do _controller_ vai começar com `/cantoras`.
+Assim, cada verbo HTTP (GET, PUT, POST e DELETE) dentro do _controller_ vai começar com `/cantoras`.
 
 ### `GET` /cantoras 
 
-Vamos dizer ao Nest que estamos criando esta rota e que ela receberá um verbo **GET** via HTTP e vai **retornar** alguma coisa.
+Vamos dizer ao Nest que estamos criando esta rota e que ela receberá um verbo **GET** via HTTP e vai **retornar** alguma coisa na tela.
 
 ```
 import { Controller } from '@nestjs/common';
@@ -309,9 +310,7 @@ class CantorasController {
 
 ```
 
-`getCantoras` é um método que estamos chamando quando a requisição chega. Pera, mas como o método sabe que a requisição é o GET?
-
-Nós o importamos como um _decorator_:
+`getCantoras()` é um método que estamos chamando quando a requisição chega. Pera, mas como o método sabe que a **requisição entrando** é um GET? Nós o **importamos como um _decorator_**:
 
 ```
 import { Controller, Get } from '@nestjs/common';
@@ -390,7 +389,7 @@ export class AppModule {}
 No terminal, execute o comando abaixo para iniciar a aplicação:
 
 ```
-npm start:dev
+npm run start:dev
 ```
 
 Se checarmos nosso package.json vemos que este comando é executado desta forma:
@@ -399,19 +398,19 @@ Se checarmos nosso package.json vemos que este comando é executado desta forma:
 nest start --watch
 ```
 
-O que em realidade nos diz que se realizamos alguma alteração nos arquivos a aplicação é imediatamente reiniciada. 
+O que em realidade nos diz que se realizarmos alguma alteração nos arquivos a aplicação é imediatamente reiniciada. 
 
-Se tudo deu certo seu terminal deve estar mostrando a aplicação rodando na porta 3000 e pode ser testada no Thunder ou Postman ou Insomnia.
+Se tudo deu certo, seu terminal deve estar mostrando a aplicação sendo executada com sucesso e pode ser testada no Thunder ou Postman ou Insomnia.
 
 ![image_07](images/image_07.png)
 
 O barato na saída deste terminal é a quantidade de informações que temos:
 
-- LOG [NestFactory] Starting Nest application... - Aqui o Nest está subindo
-- LOG [InstanceLoader] AppModule dependencies initialized - Iniciadas todas as dependências necessárias à API
-- LOG [RoutesResolver] CantorasController {/cantoras} - Controller para Cantoras funcionando
-- LOG [RouterExplorer] Mapped {/cantoras, GET} - Rota `GET /cantoras` mapeada
-- LOG [NestApplication] Nest application successfully started - Aplicação Iniciada com sucesso
+- `LOG [NestFactory] Starting Nest application...` - Aqui o Nest está subindo
+- `LOG [InstanceLoader] AppModule dependencies initialized` - Iniciadas todas as dependências necessárias à API
+- `LOG [RoutesResolver] CantorasController {/cantoras}` - Controller para Cantoras funcionando
+- `LOG [RouterExplorer] Mapped {/cantoras, GET}` - Rota `GET /cantoras` mapeada
+- `LOG [NestApplication] Nest application successfully started` - Aplicação Iniciada com sucesso
 
 ### No Thunder
 
@@ -427,3 +426,4 @@ Se tudo está certo, a resposta '**Todas as cantoras**' deverá aparecer!
 
 ## `GET` /cantoras/:cantoraID
 
+Neste momento, como não estamos fazendo uso de um Banco de Dados 
